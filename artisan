@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+// Laravel Artisan entry point is supplied by the Laravel framework after `composer install`.
+require __DIR__.'/vendor/autoload.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
+$status = $app->handleCommand(new Symfony\Component\Console\Input\ArgvInput);
+exit($status);
