@@ -1,5 +1,22 @@
 <?php
-use Illuminate\Support\Facades\Route; use App\Http\Controllers\AuthController; use App\Http\Controllers\BookController; use App\Http\Controllers\DashboardController;
-Route::get('/',fn()=>redirect()->route('dashboard'));
-Route::get('/login',[AuthController::class,'showLogin'])->name('login'); Route::post('/login',[AuthController::class,'login'])->name('login.process'); Route::post('/logout',[AuthController::class,'logout'])->name('logout');
-Route::middleware('loggedin')->group(function(){Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard'); Route::resource('books',BookController::class);});
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
+
+Route::get('/', function () {
+    return redirect()->route('login');
+})->name('home');
+
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+Route::post('/login', function () {
+    return redirect()->route('dashboard');
+})->name('login.process');
+
+Route::get('/dashboard', function () {
+    return view('dashboard.index');
+})->name('dashboard');
+
+Route::resource('books', BookController::class);
